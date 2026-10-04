@@ -2,7 +2,7 @@
 """defines a function that builds pascal's triangle"""
 
 
-def pascal_trangle(n):
+def pascal_triangle(n):
     """return pascal's triangle with n rows.
     
     args:
