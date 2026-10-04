@@ -4,14 +4,14 @@
 
 def pascal_triangle(n):
     """return pascal's triangle with n rows.
-    
+
     args:
         n (int): the number of rows.
-    
+
     returns:
         list: a list of lists of integers, or [] if n <= 0.
     """
-    if n <=0:
+    if n <= 0:
         return []
 
     triangle = [[1]]
@@ -25,4 +25,3 @@ def pascal_triangle(n):
         triangle.append(row)
 
     return triangle
-
