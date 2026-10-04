@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-"""defines a fucntion that builds pascal's triangle"""
+#!/usr/bin/python3
+"""defines a function that builds pascal's triangle"""
 
 
 def pascal_trangle(n):
