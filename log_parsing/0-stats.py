@@ -3,9 +3,6 @@
 import re
 import sys
 
-PATTERN = re.compile(
-    r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[.+\] '
-    r'"GET /projects/260 HTTP/1.1" (\d+) (\d+)$')
 CODES = ['200', '301', '400', '401', '403', '404', '405', '500']
 
 
@@ -23,18 +20,19 @@ def main():
     n = 0
     try:
         for line in sys.stdin:
-            match = PATTERN.match(line.rstrip('\n'))
-            if match is None:
+            parts = line.split()
+            if len(parts) < 2:
                 continue
-            code, size = match.groups()
+            code, size = parts[-2], parts[-1]
+            if not size.isdigit():
+                continue
             total += int(size)
             if code in CODES:
                 counts[code] = counts.get(code, 0) + 1
             n += 1
-            if n % 10 == 0:
-                print_stats(total, counts)
     finally:
-        print_stats(total, counts)
+        if n % 10 != 0:
+            print_stats(total, counts)
 
 
 if __name__ == "__main__":
