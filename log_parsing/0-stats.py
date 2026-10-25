@@ -1,32 +1,30 @@
 #!/usr/bin/python3
-"""Reads log lines from stdin and prints stats"""
-import re
+"""Reads stdin line and prints log metrics"""
 import sys
 
-PATTERN = re.compile(
-    r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[.+\] '
-    r'"GET /projects/260 HTTP/1.1" (\d+) (\d+)$')
 CODES = ['200', '301', '400', '401', '403', '404', '405', '500']
 
 
 def print_stats(total, counts):
-    """Prints the total size and the count for each status code"""
+    """Prints total file size and per code counts"""
     print("File size: {}".format(total))
     for code in sorted(counts):
         print("{}: {}".format(code, counts[code]))
 
 
 def main():
-    """Reads stdin and keeps track of stats"""
+    """Reads stdin and computes metrics"""
     total = 0
     counts = {}
     n = 0
     try:
         for line in sys.stdin:
-            match = PATTERN.match(line.rstrip())
-            if match is None:
+            parts = line.split()
+            if len(parts) < 2:
                 continue
-            code, size = match.groups()
+            code, size = parts[-2], parts[-1]
+            if not size.isdigit():
+                continue
             total += int(size)
             if code in CODES:
                 counts[code] = counts.get(code, 0) + 1
