@@ -33,9 +33,8 @@ def main():
             n += 1
             if n % 10 == 0:
                 print_stats(total, counts)
-    except KeyboardInterrupt:
+    finally:
         print_stats(total, counts)
-        raise
 
 
 if __name__ == "__main__":
